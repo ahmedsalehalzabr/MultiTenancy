@@ -12,6 +12,7 @@ namespace MultiTenancy.Services
         {
             _httpContext = contextAccessor.HttpContext;
             _tenantSettings = tenantSettings.Value;
+             
             if (_httpContext is not null)
             {
                 if (_httpContext.Request.Headers.TryGetValue("tenant", out var tenantId))

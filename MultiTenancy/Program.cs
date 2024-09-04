@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using MultiTenancy.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<ITenantService, TenantService>();
+
 builder.Services.Configure<TenantSettings>(builder.Configuration.GetSection(nameof(TenantSettings)));
 
 // Add services to the container.
@@ -30,8 +34,7 @@ foreach (var tenant in options.Tenants)
         dbContext.Database.Migrate();
     }
 }
-builder.Services.AddScoped<ITenantService, TenantService>();
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

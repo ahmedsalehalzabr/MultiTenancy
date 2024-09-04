@@ -9,10 +9,10 @@ namespace MultiTenancy.Data
 
         public string TenantId { get; set; }
        
-        public AppDbContext(DbContextOptions<AppDbContext> options, ITenantService tenantService) : base(options) 
+        public AppDbContext(DbContextOptions options, ITenantService tenantService) : base(options) 
         {
             _tenantService = tenantService;
-            TenantId = _tenantService.GetCurrentTenant().TId;
+            TenantId = _tenantService.GetCurrentTenant()?.TId;
         }
 
         public DbSet<Product> Products { get; set; }
